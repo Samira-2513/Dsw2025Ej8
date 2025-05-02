@@ -16,17 +16,42 @@ namespace Dsw2025Ej8.Domain
         : base(numero, saldo, titulares) { }
         public override void Depositar(decimal monto)
         {
-                Saldo += monto;
+            if (Estado != Estado.Activa)
+            {
+                throw new CuentaNoActiva($"No se puede operar con la cuenta {Estado}");
+            }
+            if (monto <= 0)
+            {
+                throw new MontoNoValido("El monto ingresado no es válido para la operación solicitada");
+            }
+            Saldo += monto;
         }
 
         public override void Retirar(decimal monto)
         {
-                Saldo -= monto;
+            if (Estado != Estado.Activa)
+            {
+                throw new CuentaNoActiva($"No se puede operar con la cuenta {Estado}");
+            }
+            if (monto <= 0)
+            {
+                throw new MontoNoValido("El monto ingresado no es válido para la operación solicitada");
+            }
+            if (Saldo < 0)
+            {
+                Estado = Estado.Suspendida;
+                throw new SaldoInsuficiente("La cuenta no cuenta con saldo para la operación solicitada. Fue suspendida.");
+            }
+            Saldo -= monto;
         }
 
         public void AplicarInteres()
         {
-                Saldo += Saldo * TasaDeInteres;
+            if (Estado != Estado.Activa)
+            {
+                throw new CuentaNoActiva($"No se puede operar con la cuenta {Estado}");
+            }
+            Saldo += Saldo * TasaDeInteres;
         }
     }
 }

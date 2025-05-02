@@ -17,20 +17,34 @@ namespace Dsw2025Ej8.Domain
 
         public override void Depositar(decimal monto)
         {
+            if (Estado != Estado.Activa)
+            {
+                throw new CuentaNoActiva($"No se puede operar con la cuenta {Estado}");
+            }
+            if (monto <= 0)
+            {
+                throw new MontoNoValido("El monto ingresado no es válido para la operación solicitada");
+            }
             monto -= monto * Comision;
             Saldo += monto;
         }
 
         public override void Retirar(decimal monto)
         {
-            if (Saldo - monto >= LimiteDeDescubierto)
+            if (Estado != Estado.Activa)
             {
-                Saldo -= monto;
+                throw new CuentaNoActiva($"No se puede operar con la cuenta {Estado}");
             }
-            if (Saldo < 0)
+            if (monto <= 0)
+            {
+                throw new MontoNoValido("El monto ingresado no es válido para la operación solicitada");
+            }
+            if (Saldo - monto < LimiteDeDescubierto || Saldo < 0)
             {
                 Estado = Estado.Suspendida;
+                throw new SaldoInsuficiente("La cuenta no cuenta con saldo para la operación solicitada. Fue suspendida.");
             }
+            Saldo -= monto;
         }
     }
 }
