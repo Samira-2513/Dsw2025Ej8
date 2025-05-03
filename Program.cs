@@ -10,7 +10,7 @@ namespace Dsw2025Ej8
 
             CuentaCorriente c1 = new CuentaCorriente("4586621", 5000, new string[] { "Gonzalez", "Garcia" })
             {
-                LimiteDeDescubierto = 30000,
+                LimiteDeDescubierto = 1000,
             };
             CajaAhorro c2 = new CajaAhorro("456987", 6000, new string[] { "Ruiz" })
             {
@@ -22,39 +22,82 @@ namespace Dsw2025Ej8
             };
             CuentaCorriente c4 = new CuentaCorriente("456665", 5500, new string[] { "Herrera" })
             {
-                LimiteDeDescubierto = 60000,
+                LimiteDeDescubierto = 500,
             };
+
+
+            Console.WriteLine("\t\t\t\t\tMOVIMIENTOS\n");
+            try
+            {
+                c3.Depositar(1000); 
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+            try
+            {
+                c1.Depositar(0); //Error monto no valido 
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+
+
+            try
+            {
+                c2.Retirar(7000);//Error no hay dinero suficiente
+            }
+            
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+
+            try
+            {
+                c2.Depositar(500);//Error cuenta suspendida
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+            try
+            {
+                c2.AplicarInteres();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+            try
+            {
+                c3.AplicarInteres();
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+            try
+            {
+                c4.Retirar(4900);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine($"Error: {exc.Message}");
+            }
+
+
+
+
+
+            Console.WriteLine("\n\n\n\t\t\t\t\tCUENTAS\n");
 
             cuentas.Add(c1);
             cuentas.Add(c2);
             cuentas.Add(c3);
             cuentas.Add(c4);
-
-
-            Console.WriteLine("\t\t\t\t\tMOVIMIENTOS\n");
-            foreach (var c in cuentas)
-            {
-                try
-                {
-                    c.Depositar(1000);
-                    c.Retirar(500);
-                    c.Depositar(0);
-                    c.Retirar(0);
-                }
-                catch (MontoNoValido exc)
-                {
-                    Console.WriteLine($"Error: {exc.Message}");
-                }
-                catch (CuentaNoActiva exc)
-                {
-                    Console.WriteLine($"Error: {exc.Message}");
-                }
-                catch (SaldoInsuficiente exc)
-                {
-                    Console.WriteLine($"Error: {exc.Message}");
-                }
-            }
-            Console.WriteLine("\n\n\n\t\t\t\t\tCUENTAS\n");
 
             foreach (var c in cuentas)
             {

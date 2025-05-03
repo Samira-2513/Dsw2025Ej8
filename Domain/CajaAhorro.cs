@@ -43,7 +43,7 @@ namespace Dsw2025Ej8.Domain
             {
                 throw new MontoNoValido("El monto ingresado no es válido para la operación solicitada");
             }
-            if (Saldo < 0)
+            if (Saldo < monto)
             {
                 Estado = Estado.Suspendida;
                 throw new SaldoInsuficiente("La cuenta no cuenta con saldo para la operación solicitada. Fue suspendida.");
