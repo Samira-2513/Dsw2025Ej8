@@ -13,7 +13,13 @@ namespace Dsw2025Ej8.Domain
 
 
         public CuentaCorriente(string numero, decimal saldo, string[] titulares)
-       : base(numero, saldo, titulares) { }     
+       : base(numero, saldo, titulares) { }
+
+        public override void mostrar()
+        {
+            Console.WriteLine("TIPO DE CUENTA: Cuenta Corriente");
+            base.mostrar();
+        }
 
         public override void Depositar(decimal monto)
         {

@@ -14,6 +14,12 @@ namespace Dsw2025Ej8.Domain
 
         public CajaAhorro(string numero, decimal saldo, string[] titulares)
         : base(numero, saldo, titulares) { }
+
+        public override void mostrar()
+        {
+            Console.WriteLine("TIPO DE CUENTA: Caja de ahorro");
+            base.mostrar();
+        }
         public override void Depositar(decimal monto)
         {
             if (Estado != Estado.Activa)
